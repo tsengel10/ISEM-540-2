@@ -1,0 +1,41 @@
+// @import './homepage/homepage';
+
+div.catalogColumns > div.column {
+  border: 1px solid #00BFFF;
+  border-radius: 1em;
+  margin-top: 3em;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+}
+
+.catalogTitle {
+  color: #2D2D2D;
+  margin-left: 1em;
+}
+
+.contentArea {
+  margin-top: 2em;
+}
+
+.level-left {
+  margin-top: 1em;
+  margin-left: 2em;
+}
+
+.cardText {
+  height: 13em;
+}
+
+footer {
+  margin-top: 4em;
+}
+
+.welcome_title {
+  margin-right: 4em;
+}
+
+.mainContent {
+  margin-top: 2em;
+  margin-left: 4em;
+  width: 90%;
+}

@@ -1,0 +1,14 @@
+{
+  "dev": {
+    "ORIGIN": "http://localhost:8090",
+    "BASE_URL": "/isem540/#",
+    "API_URL": {
+      "currentUser": "/currentUser",
+      "allEdocsUsers": "/allEdocsUsers",
+      "allEdocsDocuments": "/allEdocsDocuments",
+      "allEadmissionUsers": "/allEadmissionUsers",
+      "allApplyResult": "/allApplyResult",
+      "allEadmissionUniversities": "/allEadmissionUniversities"
+    }
+  }
+}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.min.css" rel="stylesheet">
+
+    {% for (var index in o.htmlWebpackPlugin.options.cdnResources.js) { %}
+    <script src="{%=o.htmlWebpackPlugin.options.cdnResources.js[index] %}"></script>
+    {% } %}
+
+    {% for (var chunk in o.htmlWebpackPlugin.files.chunks) { %}
+    <script src="{%=o.htmlWebpackPlugin.files.chunks[chunk].entry %}"></script>
+    {% } %}
+
+</head>
+<body ng-app="App">
+    <div class="ns-layout__content">{%# o.htmlWebpackPlugin.options.mainContent %}</div>
+    <footer class="footer">
+        <div class="container">
+            <div class="content has-text-centered">
+                <p>
+                    <strong>Tsengel Gerelsaikhan, Uguudei Mijigsengee, Altanshagai Nyamdeleg, Anum Khan</strong>
+                    </br>
+                    <a href="#">Harrisburg University</a> ISEM540 - Late fall 2017.
+                </p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

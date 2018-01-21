@@ -1,0 +1,124 @@
+<div>
+    <section class="hero is-primary is-medium">
+        <!-- Hero head: will stick at the top -->
+        <div class="hero-head">
+            <nav class="navbar">
+                <div class="container">
+                    <div class="navbar-brand">
+                        <a class="navbar-item" href="#/"><h1 class="title">E-EduMon</h1></a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div id="navbarMenuHeroA" class="navbar-menu">
+            <div class="navbar-end">
+                <strong>
+                    <span class="welcome_title">Welcome {{ vm.currentUser.lastName }}, {{ vm.currentUser.firstName }} ({{ vm.currentUser.role }})</span>
+                </strong>  
+            </div>
+        </div>
+    </section>
+
+    <div class="mainContent">
+        <span class="tag is-info is-large">E-Docs module</span>
+        <div class="tabs is-large is-centered">
+            <ul>
+                <li ng-class="{ 'is-active': vm.isCurrentTab('allUsers') }" ng-click="vm.setCurrentTab('allUsers')"><a>All Users</a></li>
+                <li ng-class="{ 'is-active': vm.isCurrentTab('allDocuments') }" ng-click="vm.setCurrentTab('allDocuments')"><a>All Documents</a></li>
+            </ul>
+        </div>
+        
+        <div ng-if="!vm.isShowUserDocuments">  
+            <div ng-if="vm.isCurrentTab('allUsers')">
+                <table class="table">
+                    <thead>
+                        <tr>
+                        <th>User ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Active</th>
+                        <th>Documents</th>
+                        <th>Action(s)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="user in vm.allUsers">
+                            <th> {{ user.id }}</th>
+                            <td>{{ user.lastName }}, {{ user.firstName }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.role }}</td>
+                            <td>{{ user.active }}</td>
+                            <td>{{ user.documents.length>0 ? "Yes" : "No" }} ({{ user.documents.length }})</td>
+                            <td ng-if="vm.hasDocumentsToShow(user)">
+                                <a class='button is-primary' ng-click="vm.documentDetails(user)">See docuemnt(s)</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div ng-if="vm.isCurrentTab('allDocuments')">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>File ID</th>
+                            <th>File Name</th>
+                            <th>File Received date</th>
+                            <th>Format</th>
+                            <th>Action(s)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="file in vm.allDocuments">
+                            <th> {{ file.id }}</th>
+                            <td>{{ file.name }}</td>
+                            <td>{{ file.receiveDate }}</td>
+                            <td>{{ file.fileFormat }}</td>
+                            <td><a href="">Download</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div ng-if="vm.isShowUserDocuments">    
+            <div class="columns">
+                <div class="column is-one-fifth">
+                    <a class='button is-primary' ng-click="vm.showList()"><-- Back</a>
+                </div>
+                <div class="column is-one-third">
+                    <p><strong>UserID: </strong>{{ vm.selectedUser.id }}</p>
+                    <p><strong>First Name: </strong>{{ vm.selectedUser.firstName }}</p>
+                    <p><strong>Last Name: </strong>{{ vm.selectedUser.lastName }}</p>
+                </div>
+                <div class="column is-one-third">
+                    <p><strong>Email: </strong>{{ vm.selectedUser.email }}</p>
+                    <p><strong>Role: </strong>{{ vm.selectedUser.role }}</p>
+                    <p><strong>Active: </strong>{{ vm.selectedUser.active }}</p>
+                </div>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>File ID</th>
+                        <th>File Name</th>
+                        <th>File Received date</th>
+                        <th>Format</th>
+                        <th>Action(s)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="file in vm.selectedUserDocuments">
+                        <th> {{ file.id }}</th>
+                        <td>{{ file.name }}</td>
+                        <td>{{ file.receiveDate }}</td>
+                        <td>{{ file.fileFormat }}</td>
+                        <td><a href="">Download</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,237 @@
+<div>
+    <section class="hero is-primary is-medium">
+        <!-- Hero head: will stick at the top -->
+        <div class="hero-head">
+            <nav class="navbar">
+                <div class="container">
+                    <div class="navbar-brand">
+                        <a class="navbar-item" href="#/"><h1 class="title">E-EduMon</h1></a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div id="navbarMenuHeroA" class="navbar-menu">
+            <div class="navbar-end">
+                <strong>
+                    <span class="welcome_title">Welcome {{ vm.currentUser.lastName }}, {{ vm.currentUser.firstName }} ({{ vm.currentUser.role }})</span>
+                </strong>  
+            </div>
+        </div>
+    </section>
+
+    <div class="mainContent">
+        <span class="tag is-info is-large">E-Admission module</span>
+        <div class="tabs is-large is-centered">
+            <ul>
+                <li ng-class="{ 'is-active': vm.isCurrentTab('allUsers') }" ng-click="vm.setCurrentTab('allUsers')"><a>Users</a></li>
+                <li ng-class="{ 'is-active': vm.isCurrentTab('allUniversities') }" ng-click="vm.setCurrentTab('allUniversities')"><a>Universities</a></li>
+                <li ng-class="{ 'is-active': vm.isCurrentTab('applyResult') }" ng-click="vm.setCurrentTab('applyResult')"><a>Apply result</a></li>
+            </ul>
+        </div>
+        
+        <div ng-if="!vm.isShowEadmissionDetails">  
+            <div ng-if="vm.isCurrentTab('allUsers')">
+                <table class="table">
+                    <thead>
+                        <tr>
+                        <th>User ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Active</th>
+                        <th>SAT</th>
+                        <th>TOEFL</th>
+                        <th>Num of applied Univ</th>
+                        <th>Action(s)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="user in vm.allEadmissionUsers">
+                            <th> {{ user.id }}</th>
+                            <td>{{ user.lastName }}, {{ user.firstName }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.role }}</td>
+                            <td>{{ user.active }}</td>
+                            <td>{{ user.satScore }}</td>
+                            <td>{{ user.toeflScore }}</td>
+                            <td>{{ user.universities.length }}</td>
+                            <td><a class='button is-primary' ng-click="vm.showUserDetails(user)">See details</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div ng-if="vm.isCurrentTab('allUniversities')">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Institution name</th>
+                            <th>Institution Code</th>
+                            <th>Total students</th>
+                            <th>Capacity</th>
+                            <th>Active</th>
+                            <th>Req SAT Score</th>
+                            <th>Req TOEFL Score</th>
+                            <th>Address</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="univ in vm.allUniversities">
+                            <th>{{ univ.name }}</th>
+                            <td>{{ univ.institutionCode }}</td>
+                            <td>{{ univ.totalStudents }}</td>
+                            <td>{{ univ.capacity }}</td>
+                            <td>{{ univ.active }}</td>
+                            <td>{{ univ.minSatScore }}</td>
+                            <td>{{ univ.minToeflScore }}</td>
+                            <td>{{ univ.address.city }}, {{ univ.address.state }} {{ univ.address.zipCode }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div ng-if="vm.isCurrentTab('applyResult')">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Active</th>
+                            <th>SAT</th>
+                            <th>TOEFL</th>
+                            <th>Num of applied univ</th>
+                            <th>Num of accepted univ</th>
+                            <th>Action(s)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="result in vm.allApplyResult">
+                            <th>{{ result.user.id }}</th>
+                            <td>{{ result.user.lastName }}, {{ result.user.firstName }}</td>
+                            <td>{{ result.user.email }}</td>
+                            <td>{{ result.user.active }}</td>
+                            <td>{{ result.user.satScore }}</td>
+                            <td>{{ result.user.toeflScore }}</td>
+                            <td>{{ result.totalUniversitiesApplied }}</td>
+                            <td>{{ result.acceptedUniversities.length }}</td>
+                            <td><a class="button is-primary" ng-click="vm.showApplyResult(result)">See accepted Universities</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div ng-if="vm.isShowEadmissionDetails">
+            <div ng-if="vm.isUserDetail">
+                <div class="columns">
+                    <div class="column is-one-fifth">
+                        <a class='button is-primary' ng-click="vm.showList()"><-- Back</a>
+                    </div>
+                    <div class="column is-one-third">
+                        <p><strong>UserID: </strong>{{ vm.selectedUser.id }}</p>
+                        <p><strong>First Name: </strong>{{ vm.selectedUser.firstName }}</p>
+                        <p><strong>Last Name: </strong>{{ vm.selectedUser.lastName }}</p>
+                        <p><strong>Email: </strong>{{ vm.selectedUser.email }}</p>
+                        <p><strong>Role: </strong>{{ vm.selectedUser.role }}</p>
+                    </div>
+                    <div class="column is-one-third">
+                        <p><strong>Active: </strong>{{ vm.selectedUser.active }}</p>
+                        <p><strong>SAT Score: </strong>{{ vm.selectedUser.satScore }}</p>
+                        <p><strong>TOEFL Score: </strong>{{ vm.selectedUser.toeflScore }}</p>
+                        <p><strong>Num of universities applied: </strong>{{ vm.selectedUser.universities.length }}</p>
+                    </div>
+                </div>
+                </br>
+                <span class="tag is-info is-large">List of applied universities</span>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Institute name</th>
+                            <th>Institute Code</th>
+                            <th>Total students</th>
+                            <th>Capacity</th>
+                            <th>Active</th>
+                            <th>Req SAT Score</th>
+                            <th>Req TOEFL Score</th>
+                            <th>Address</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="univ in vm.selectedUserUniversities">
+                            <th>{{ univ.name }}</th>
+                            <td>{{ univ.institutionCode }}</td>
+                            <td>{{ univ.totalStudents }}</td>
+                            <td>{{ univ.capacity }}</td>
+                            <td>{{ univ.active }}</td>
+                            <td>{{ univ.minSatScore }}</td>
+                            <td>{{ univ.minToeflScore }}</td>
+                            <td>{{ univ.address.city }}, {{ univ.address.state }} {{ univ.address.zipCode }}</td>
+                            <td><a class="button is-primary">
+                                    <span class="icon is-small"><i class="fa fa-check"></i></span>
+                                    <span>APPLIED</span>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>   
+            <div ng-if="vm.isApplyResultDetail">
+                <div class="columns">
+                    <div class="column is-one-fifth">
+                        <a class='button is-primary' ng-click="vm.showList()"><-- Back</a>
+                    </div>
+                    <div class="column is-one-third">
+                        <p><strong>UserID: </strong>{{ vm.selectedApplyResult.id }}</p>
+                        <p><strong>First Name: </strong>{{ vm.selectedApplyResult.user.firstName }}</p>
+                        <p><strong>Last Name: </strong>{{ vm.selectedApplyResult.user.lastName }}</p>
+                        <p><strong>Email: </strong>{{ vm.selectedApplyResult.user.email }}</p>
+                        <p><strong>Role: </strong>{{ vm.selectedApplyResult.user.role }}</p>
+                    </div>
+                    <div class="column is-one-third">
+                        <p><strong>Active: </strong>{{ vm.selectedApplyResult.user.active }}</p>
+                        <p><strong>SAT Score: </strong>{{ vm.selectedApplyResult.user.satScore }}</p>
+                        <p><strong>TOEFL Score: </strong>{{ vm.selectedApplyResult.user.toeflScore }}</p>
+                        <p><strong>Num of universities applied: </strong>{{ vm.selectedApplyResult.totalUniversitiesApplied }}</p>
+                        <p><strong>Num of universities accepted: </strong>{{ vm.selectedApplyResult.acceptedUniversities.length }}</p>
+                    </div>
+                </div>
+
+                <span class="tag is-info is-large">List of ACCEPTED universities</span>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Institute name</th>
+                            <th>Institute Code</th>
+                            <th>Total students</th>
+                            <th>Capacity</th>
+                            <th>Active</th>
+                            <th>Req SAT Score</th>
+                            <th>Req TOEFL Score</th>
+                            <th>Address</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="univ in vm.selectedApplyResult.acceptedUniversities">
+                            <th>{{ univ.name }}</th>
+                            <td>{{ univ.institutionCode }}</td>
+                            <td>{{ univ.totalStudents }}</td>
+                            <td>{{ univ.capacity }}</td>
+                            <td>{{ univ.active }}</td>
+                            <td>{{ univ.minSatScore }}</td>
+                            <td>{{ univ.minToeflScore }}</td>
+                            <td>{{ univ.address.city }}, {{ univ.address.state }} {{ univ.address.zipCode }}</td>
+                            <td><a class="button is-link">
+                                    <span class="icon is-small"><i class="fa fa-check-circle-o"></i></span>
+                                    <span>ACCEPTED</span>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+    </div>
+</div>
+    
