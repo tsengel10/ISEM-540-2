@@ -6,9 +6,6 @@ Things that are used here
  - mock-backend
  - npm & node
  
-Todo
- - Include unit testing
- 
 How to run...
  - Nodejs 4.x
  - NPM (3.5 or latest)
